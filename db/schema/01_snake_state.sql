@@ -1,6 +1,6 @@
 -- Drop and recreate Users table (Example)
 
-DROP TABLE IF EXISTS snake_state
+DROP TABLE IF EXISTS snake_state;
 CREATE TABLE snake_state (
   id SERIAL PRIMARY KEY NOT NULL,
   time_created TIMESTAMP DEFAULT now(), 
