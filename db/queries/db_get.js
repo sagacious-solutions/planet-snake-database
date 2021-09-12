@@ -1,17 +1,17 @@
 const { db_client, makeGetQuery } = require("../db.js");
 
-const getLastPoop = function () {
+const getPoopFound = function () {
   const queryString = makeGetQuery(
     `time_created`,
     "snake_state",
     `poop_found IS TRUE`
   );
 
-  console.log(queryString);
+  //   console.log(queryString);
 
-  return db_client.query(queryString).then((res) => res.rows[0]);
+  return db_client.query(queryString).then((res) => res.rows);
 };
 
 module.exports = {
-  getLastPoop,
+  getPoopFound,
 };
