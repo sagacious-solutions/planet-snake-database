@@ -17,6 +17,9 @@ const makeGetQuery = function (selection, table, where) {
     `;
   }
 
+  // makes sure to order returned results by time
+  queryString += "ORDER BY time_created DESC";
+
   return queryString;
 };
 
