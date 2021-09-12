@@ -2,7 +2,7 @@
    @params: none
    @return: [{survey,admin},{survey,admin},{survey,admin},{survey,admin}]
 */
-getCurrLinks()
+getCurrLinks();
 
 /**creates a poll and returns the id
    @params: poll: {
@@ -15,7 +15,7 @@ getCurrLinks()
             }
    @return: id of new poll
 */
-createPoll(newPoll)
+createPoll(newPoll);
 
 /**takes a pollID and returns poll object
    @params: pollID: 1
@@ -27,13 +27,13 @@ createPoll(newPoll)
                timeCreated
             };
 */
-getPollData(pollID)
+getPollData(pollID);
 
 /**takes a pollID and returns array of pollOptions
    @params: pollID: 1
    @return: ["option1","option2","option3"]
 */
-getPollOptions(pollID)
+getPollOptions(pollID);
 
 /**takes in array of the new options and the poll_id to add to
    @params:
@@ -41,16 +41,16 @@ getPollOptions(pollID)
    pollID: 1
    @return: none
 */
-insertPollOptions(pollOptions,pollID)
+insertPollOptions(pollOptions, pollID);
 
 /**takes a pollID and returns array of pollOptions and ratings
    @params: pollID: 1
    @return: [{option1:10},{option2:20},{option3:145}]
 */
-getPollRatings(pollID)
+getPollRatings(pollID);
 
 /**takes a pollID and returns array of pollOptions and ratings
    @params:pollRatings:[{option1:10},{option2:20},{option3:145}], pollID: 1
    @return: true/false for inserted or not
 */
-insertPollRatings(pollRatings)
+insertPollRatings(pollRatings);
