@@ -1,0 +1,14 @@
+{
+  "name": "planet-snake-database",
+  "version": "1.0.0",
+  "description": "The PSQL express server to handle data from Planet Snake Website as well as planet snakes hardware API. ",
+  "main": "index.js",
+  "repository": "git@github.com:sagacious-solutions/planet-snake-database.git",
+  "author": "Matt Macdonald <mksmacdonald@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
