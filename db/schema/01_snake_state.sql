@@ -5,7 +5,7 @@ CREATE TABLE snake_state (
   id SERIAL PRIMARY KEY NOT NULL,
   time_created TIMESTAMP DEFAULT now(), 
   time_light_switch SMALLINT CHECK (time_light_switch > 0 AND time_light_switch < 13),
-  shed_iminent BOOLEAN DEFAULT 'f',
+  shed_imminent BOOLEAN DEFAULT 'f',
   shed_complete BOOLEAN DEFAULT 'f',
   poop_found BOOLEAN DEFAULT 'f',
   urate_found BOOLEAN DEFAULT 'f',
