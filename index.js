@@ -34,7 +34,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-const { getPoopFound, getAllUrateFound } = require("./db/queries/db_get");
+const {
+  getPoopFound,
+  getAllUrateFound,
+  queryForSnakeState,
+  queryForSnakeValue,
+} = require("./db/queries/db_get");
 // const pageRoutes = require("./routes/redirects");
 
 app.listen(PORT, () => {
@@ -55,6 +60,66 @@ app.get("/poop_found", cors(), (req, res) => {
 // queries server for all poops found, then posts it to the web server.
 app.get("/urate_found", cors(), (req, res) => {
   getAllUrateFound()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("Unable to retrieve data : ", err);
+    });
+});
+
+// queries server for all poops found, then posts it to the web server.
+app.get("/rats_offered", cors(), (req, res) => {
+  queryForSnakeState(`rat_offered`)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("Unable to retrieve data : ", err);
+    });
+});
+
+// queries server for all poops found, then posts it to the web server.
+app.get("/rats_ate", cors(), (req, res) => {
+  queryForSnakeState(`rat_ate`)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("Unable to retrieve data : ", err);
+    });
+});
+// queries server for all poops found, then posts it to the web server.
+app.get("/rats_ignored", cors(), (req, res) => {
+  queryForSnakeState(`rat_ignored`)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("Unable to retrieve data : ", err);
+    });
+});
+// queries server for all poops found, then posts it to the web server.
+app.get("/sheds_imminent", cors(), (req, res) => {
+  queryForSnakeState(`shed_imminent`)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("Unable to retrieve data : ", err);
+    });
+});
+app.get("/sheds_complete", cors(), (req, res) => {
+  queryForSnakeState(`shed_complete`)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log("Unable to retrieve data : ", err);
+    });
+});
+app.get("/weight_measures", cors(), (req, res) => {
+  queryForSnakeValue(`snake_weight`)
     .then((data) => {
       res.json(data);
     })
