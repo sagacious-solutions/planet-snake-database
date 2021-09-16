@@ -12,6 +12,19 @@ const getPoopFound = function () {
   return db_client.query(queryString).then((res) => res.rows);
 };
 
+const getAllUrateFound = function () {
+  const queryString = makeGetQuery(
+    `time_created`,
+    "snake_state",
+    `urate_found IS TRUE`
+  );
+
+  //   console.log(queryString);
+
+  return db_client.query(queryString).then((res) => res.rows);
+};
+
 module.exports = {
   getPoopFound,
+  getAllUrateFound,
 };
