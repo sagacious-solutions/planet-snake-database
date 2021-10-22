@@ -1,18 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const PORT = process.env.PORT || 8081;
-const morgan = require("morgan");
 const cors = require("cors");
 
 const app = express();
+app.use(express.json());
 
-// app.use(morgan("dev"));
-
-// https://stackoverflow.com/questions/18310394/no-access-control-allow-origin-node-apache-port-issue
 app.use(function (req, res, next) {
-  // Website you wish to allow to connect
-  // res.setHeader("Access-Control-Allow-Origin", "http://localhost:8888");
-  res.setHeader("Access-Control-Allow-Origin", process.env.LOCAL_TEST_COMPUTER);
+  res.setHeader("Access-Control-Allow-Origin", "*"); //, process.env.LOCAL_TEST_COMPUTER);
 
   // Request methods you wish to allow
   res.setHeader(
@@ -25,12 +20,6 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Headers",
     "X-Requested-With,content-type"
   );
-
-  // // Set to true if you need the website to include cookies in the requests sent
-  // // to the API (e.g. in case you use sessions)
-  // res.setHeader("Access-Control-Allow-Credentials", true);
-
-  // Pass to next layer of middleware
   next();
 });
 
@@ -40,13 +29,13 @@ const {
   queryForSnakeState,
   queryForSnakeValue,
 } = require("./db/queries/db_get");
-// const pageRoutes = require("./routes/redirects");
+
+const { updateBooleanSnakeState } = require("./db/queries/db_put");
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
-// queries server for all poops found, then posts it to the web server.
 app.get("/poop_found", cors(), (req, res) => {
   getPoopFound()
     .then((data) => {
@@ -57,7 +46,6 @@ app.get("/poop_found", cors(), (req, res) => {
     });
 });
 
-// queries server for all poops found, then posts it to the web server.
 app.get("/urate_found", cors(), (req, res) => {
   getAllUrateFound()
     .then((data) => {
@@ -68,7 +56,6 @@ app.get("/urate_found", cors(), (req, res) => {
     });
 });
 
-// queries server for all poops found, then posts it to the web server.
 app.get("/rats_offered", cors(), (req, res) => {
   queryForSnakeState(`rat_offered`)
     .then((data) => {
@@ -79,7 +66,6 @@ app.get("/rats_offered", cors(), (req, res) => {
     });
 });
 
-// queries server for all poops found, then posts it to the web server.
 app.get("/rats_ate", cors(), (req, res) => {
   queryForSnakeState(`rat_ate`)
     .then((data) => {
@@ -89,7 +75,7 @@ app.get("/rats_ate", cors(), (req, res) => {
       console.log("Unable to retrieve data : ", err);
     });
 });
-// queries server for all poops found, then posts it to the web server.
+
 app.get("/rats_ignored", cors(), (req, res) => {
   queryForSnakeState(`rat_ignored`)
     .then((data) => {
@@ -99,7 +85,7 @@ app.get("/rats_ignored", cors(), (req, res) => {
       console.log("Unable to retrieve data : ", err);
     });
 });
-// queries server for all poops found, then posts it to the web server.
+
 app.get("/sheds_imminent", cors(), (req, res) => {
   queryForSnakeState(`shed_imminent`)
     .then((data) => {
@@ -109,6 +95,7 @@ app.get("/sheds_imminent", cors(), (req, res) => {
       console.log("Unable to retrieve data : ", err);
     });
 });
+
 app.get("/sheds_complete", cors(), (req, res) => {
   queryForSnakeState(`shed_complete`)
     .then((data) => {
@@ -118,6 +105,7 @@ app.get("/sheds_complete", cors(), (req, res) => {
       console.log("Unable to retrieve data : ", err);
     });
 });
+
 app.get("/weight_measures", cors(), (req, res) => {
   queryForSnakeValue(`snake_weight`)
     .then((data) => {
@@ -126,4 +114,10 @@ app.get("/weight_measures", cors(), (req, res) => {
     .catch((err) => {
       console.log("Unable to retrieve data : ", err);
     });
+});
+
+// RECEIVING DATA - UPDATE DATABASE AND THEN RESPOND WITH APPROPRIATE HTTP STATUS CODE
+app.post("/update_snake_state", cors(), (req, res) => {
+  updateBooleanSnakeState(req.body);
+  res.end();
 });
