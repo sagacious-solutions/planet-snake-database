@@ -5,8 +5,7 @@ This is the database for <a href="https://github.com/sagacious-solutions/planet-
 To build a new database or reset the current one. Run the following commands.
 
 ```sh
-yarn create-tables
-yarn seed-db
+bash reset-db.sh
 ```
 
 Here is the ERD.
