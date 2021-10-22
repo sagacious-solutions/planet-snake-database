@@ -3,10 +3,35 @@ const pg = require("pg");
 const Client = pg.Client;
 
 const db_client = new Client(process.env.DATABASE_URL);
+const DB_TIMEZONE = process.env.TIME_ZONE;
 
-db_client.connect().then(() => console.log("Connected to database"));
+db_client
+  .connect()
+  .then(() => console.log("Connected to database"))
+  .then(() => {
+    setDbTimeZone(DB_TIMEZONE);
+  });
 
-// Creates an formats a query string for PSQL based on what its passed
+const setDbTimeZone = (timeZone) => {
+  console.log(timeZone);
+  const QUERY_STRING = `SET TIMEZONE="${timeZone}"`;
+
+  db_client
+    .query(QUERY_STRING)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+/**
+ * @param {string} selection column requested
+ * @param {string} table table to request data from
+ * @param {string} where OPTIONAL - where selection
+ * @return {string} a query string for the database
+ */
 const makeGetQuery = function (selection, table, where) {
   let queryString = `SELECT ${selection}
   FROM ${table}
@@ -17,7 +42,6 @@ const makeGetQuery = function (selection, table, where) {
     `;
   }
 
-  // makes sure to order returned results by time
   queryString += "ORDER BY time_created DESC";
 
   return queryString;
@@ -42,9 +66,6 @@ const makePutQuery = function (table, properties, queryParams, return_id) {
   // This tracks the iteration across loops
   let true_index = 1;
 
-  console.log("LENGTH OF queryParams", queryParams.length);
-
-  // @https://stackoverflow.com/questions/31104879/how-to-check-if-array-is-multidimensional-jquery/42317865
   if (!(queryParams[0].constructor === Array)) {
     queryParams = [queryParams];
   }
@@ -70,6 +91,7 @@ const makePutQuery = function (table, properties, queryParams, return_id) {
   if (return_id) {
     queryString += "RETURNING id";
   }
+
   return queryString;
 };
 
